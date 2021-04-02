@@ -3,7 +3,7 @@ package com.ww.designPatterns.decorator;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 业务逻辑：下单
+ * 业务逻辑: 下单
  *
  * @author: Sun
  * @create: 2021-03-12 14:56

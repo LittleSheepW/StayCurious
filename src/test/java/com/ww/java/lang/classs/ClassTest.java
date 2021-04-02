@@ -1,11 +1,7 @@
-package com.ww.java.lang;
+package com.ww.java.lang.classs;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.TypeVariable;
 import java.util.*;
 import java.util.function.Function;
@@ -19,14 +15,14 @@ public class ClassTest {
 
     /**
      * 使用给定的字符串名称返回与类或接口关联的Class对象。
-     * 调用此方法等效于：Class.forName(className，true，currentLoader)，其中currentLoader表示当前类的定义类加载器。
-     * 例如，以下代码片段返回名为java.lang.Thread的类的运行时Class描述符：Class t = Class.forName（“java.lang.Thread”）
+     * 调用此方法等效于: Class.forName(className，true，currentLoader)，其中currentLoader表示当前类的定义类加载器。
+     * 例如，以下代码片段返回名为java.lang.Thread的类的运行时Class描述符: Class t = Class.forName（“java.lang.Thread”）
      * 调用forName(“X”)会导致名为X的类被初始化。
      */
     @Test
     public void forNameTest() {
         try {
-            Class<?> classObject = Class.forName("com.ww.java.lang.ClassTest");
+            Class<?> classObject = Class.forName("com.ww.java.lang.classs.ClassTest");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -36,7 +32,7 @@ public class ClassTest {
      * 以String形式返回此Class对象表示的实体名称（类，接口，数组类，原始类型或void）。
      * 如果该类对象表示的引用类型不是数组类型，则返回该类的二进制名称，如Java™语言规范所指定。
      * 如果此类对象表示原始类型或void，则返回的名称是一个String，该字符串等于对应于原始类型或void的Java语言关键字。
-     * 如果此类对象表示一类数组，则名称的内部形式由元素类型的名称组成，其后是一个或多个代表数组嵌套深度的'['字符。元素类型名称的编码如下：
+     * 如果此类对象表示一类数组，则名称的内部形式由元素类型的名称组成，其后是一个或多个代表数组嵌套深度的'['字符。元素类型名称的编码如下:
      * Element Type          Encoding
      * boolean                  Z
      * byte                     B
@@ -101,7 +97,7 @@ public class ClassTest {
                 return null;
             }
         }.getClass().getSimpleName());
-        // 注意：使用lambda表达匿名类时，是有名字的
+        // 注意: 使用lambda表达匿名类时，是有名字的
         System.out.println(((Function<ClassTest, String>) classTest -> null).getClass().getSimpleName());
 
         System.out.println();
@@ -114,7 +110,7 @@ public class ClassTest {
 
     /**
      * 返回Java语言规范定义的基础类的规范名称。如果基础类没有规范名称（即，如果它是本地或匿名类或其组件类型没有规范名称的数组），则返回null。
-     * 注意：getName()和getCanonicalName()都可以产生完整类名，getCanonicalName()除内部类和数组外，对大部分类产生的结果与getName()相同。
+     * 注意: getName()和getCanonicalName()都可以产生完整类名，getCanonicalName()除内部类和数组外，对大部分类产生的结果与getName()相同。
      */
     @Test
     public void getCanonicalNameTest() {
@@ -146,10 +142,10 @@ public class ClassTest {
     /**
      * 确定由该对象表示的类或接口实现的接口。
      * 如果此对象表示一个类，则返回值是一个包含对象的数组，这些对象表示该类实现的所有接口。数组中接口对象的顺序与该对象表示的类的声明的Implements
-     * 子句中接口名称的顺序相对应。例如，给出声明：
+     * 子句中接口名称的顺序相对应。例如，给出声明:
      * class Shimmer implements FloorWax, DessertTopping { ... }
-     * 假设s的值是Shimmer的一个实例；表达式的值：s.getClass().getInterfaces()[0]是表示接口FloorWax的Class对象；
-     * 表达式的值：s.getClass().getInterfaces()[1]是表示接口DessertTopping的Class对象。
+     * 假设s的值是Shimmer的一个实例；表达式的值: s.getClass().getInterfaces()[0]是表示接口FloorWax的Class对象；
+     * 表达式的值: s.getClass().getInterfaces()[1]是表示接口DessertTopping的Class对象。
      * 如果此对象表示接口，则数组包含表示该接口扩展的所有接口的对象。数组中接口对象的顺序与该对象表示的接口的声明的extends子句中接口名称的顺序相对应。
      * 如果此对象表示未实现任何接口的类或接口，则该方法返回长度为0的数组。
      * 如果此对象表示原始类型或void，则该方法返回长度为0的数组。

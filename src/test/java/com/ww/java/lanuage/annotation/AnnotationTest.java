@@ -15,7 +15,7 @@ public class AnnotationTest {
 
     /**
      * 如果此元素上存在指定类型的注释，则返回true，否则返回false。 设计此方法主要是为了方便访问标记注释。
-     * 此方法返回的真值等效于：getAnnotation(annotationClass) != null
+     * 此方法返回的真值等效于: getAnnotation(annotationClass) != null
      * 默认方法的主体指定为上面的代码。
      */
     @Test
