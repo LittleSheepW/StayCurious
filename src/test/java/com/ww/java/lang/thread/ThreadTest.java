@@ -23,11 +23,11 @@ public class ThreadTest {
      *
      * - Thread.sleep()方法: 当一个执行中的线程调用了该方法后，调用线程会暂时让出指定时间的执行权，也就是在这期间不参与CPU的调度，但是该线程
      * 所拥有的监视器资源，比如锁还是持有不让出的。指定的睡眠时间到了后该函数会正常返回，线程就处于就绪状态，然后参与CPU的调度，获取到CPU资源
-     * 后就可以继续运行了。如果在睡眠期间其他线程调用了该线程的interrupt（）方法中断了该线程，则该线程会在调用sleep方法的地方抛出InterruptedException
+     * 后就可以继续运行了。如果在睡眠期间其他线程调用了该线程的interrupt()方法中断了该线程，则该线程会在调用sleep方法的地方抛出InterruptedException
      * 异常而返回。
      * - Object.wait()方法: 当一个线程调用一个共享变量的wait()方法时，该调用线程会被阻塞挂起并释放共享变量上的锁，直到发生下面几件事情之一才返回:
-     * （1）其他线程调用了该共享对象的notify()或者notifyAll()方法；
-     * （2）其他线程调用了该线程的interrupt()方法，该线程抛出InterruptedException异常返回。
+     * (1)其他线程调用了该共享对象的notify()或者notifyAll()方法；
+     * (2)其他线程调用了该线程的interrupt()方法，该线程抛出InterruptedException异常返回。
      * - Thread.yield()方法:
      * Thread类中有一个静态的yield方法，当一个线程调用yield方法时，实际就是在暗示线程调度器当前线程请求让出自己的CPU使用，但是线程调度器可以
      * 无条件忽略这个暗示。我们知道操作系统是为每个线程分配一个时间片来占有CPU的，正常情况下当一个线程把分配给自己的时间片使用完后，线程调度器
@@ -136,12 +136,12 @@ public class ThreadTest {
 
     /**
      * Test case: {@link Thread#join()}
-     * 主线程调用线程A的join方法后会被阻塞，当其他线程调用了主线程的interrupt（）方法中断了主线程时，主线程会抛出InterruptedException异常而返回。
+     * 主线程调用线程A的join方法后会被阻塞，当其他线程调用了主线程的interrupt()方法中断了主线程时，主线程会抛出InterruptedException异常而返回。
      * 测试目的: 测试上述流程。
      * <p>
      * 如下代码在threadA线程里面执行死循环，主线程调用threadA的join方法阻塞自己等待线程threadA执行完毕，待threadB休眠1s后会调用主线程
-     * 的interrupt（）方法设置主线程的中断标志，从结果看在主线程中的threadA.join（）处会抛出InterruptedException异常。这里需要注意的是，
-     * 在threadB里面调用的是主线程的interrupt（）方法，而不是线程threadA的。
+     * 的interrupt()方法设置主线程的中断标志，从结果看在主线程中的threadA.join()处会抛出InterruptedException异常。这里需要注意的是，
+     * 在threadB里面调用的是主线程的interrupt()方法，而不是线程threadA的。
      */
     @Test
     public void joinThrowInterruptedExceptionTest() {
@@ -182,7 +182,7 @@ public class ThreadTest {
      * Test case: {@link Thread#sleep(long)}
      * API描述: Thread类中有一个静态的sleep方法，当一个执行中的线程调用了Thread的sleep方法后，调用线程会暂时让出指定时间的执行权，也就是在
      * 这期间不参与CPU的调度，但是该线程所拥有的监视器资源，比如锁还是持有不让出的。指定的睡眠时间到了后该函数会正常返回，线程就处于就绪状态，
-     * 然后参与CPU的调度，获取到CPU资源后就可以继续运行了。如果在睡眠期间其他线程调用了该线程的interrupt（）方法中断了该线程，则该线程会在调用
+     * 然后参与CPU的调度，获取到CPU资源后就可以继续运行了。如果在睡眠期间其他线程调用了该线程的interrupt()方法中断了该线程，则该线程会在调用
      * sleep方法的地方抛出InterruptedException异常而返回。
      */
     @Test
@@ -230,7 +230,7 @@ public class ThreadTest {
 
     /**
      * Test case: {@link Thread#sleep(long)}
-     * 测试在睡眠期间其他线程调用了该线程的interrupt（）方法中断了该线程，则该线程会在调用sleep方法的地方抛出InterruptedException异常而返回。
+     * 测试在睡眠期间其他线程调用了该线程的interrupt()方法中断了该线程，则该线程会在调用sleep方法的地方抛出InterruptedException异常而返回。
      * 测试目的: 测试上述流程。
      */
     @Test
@@ -395,10 +395,10 @@ public class ThreadTest {
 
     /**
      * Test case: {@link Thread#interrupt()}
-     * API描述: 中断线程，例如，当线程A运行时，线程B可以调用线程A的interrupt（）方法来设置线程A的中断标志为true并立即返回。设置标志仅仅是设置标志，
+     * API描述: 中断线程，例如，当线程A运行时，线程B可以调用线程A的interrupt()方法来设置线程A的中断标志为true并立即返回。设置标志仅仅是设置标志，
      * 线程A实际并没有被中断，它会继续往下执行。如果线程A因为调用了wait系列函数、join方法或者sleep方法而被阻塞挂起，这时候若线程B调用线程A
-     * 的interrupt（）方法，线程A会在调用这些方法的地方抛出InterruptedException异常而返回。
-     * 测试目的: 测试线程B调用线程A的interrupt（）方法来设置线程A的中断标志后，线程A是否还会继续执行。    结果: 会
+     * 的interrupt()方法，线程A会在调用这些方法的地方抛出InterruptedException异常而返回。
+     * 测试目的: 测试线程B调用线程A的interrupt()方法来设置线程A的中断标志后，线程A是否还会继续执行。    结果: 会
      */
     @Test
     public void interruptTest() {
@@ -428,7 +428,7 @@ public class ThreadTest {
 
     /**
      * Test case: {@link Thread#interrupt()}
-     * 线程A因为调用了wait系列函数、join方法或者sleep方法而被阻塞挂起，这时候若线程B调用线程A的interrupt（）方法，线程A会在调用这些
+     * 线程A因为调用了wait系列函数、join方法或者sleep方法而被阻塞挂起，这时候若线程B调用线程A的interrupt()方法，线程A会在调用这些
      * 方法的地方抛出InterruptedException异常而返回。
      * 测试目的: 测试上述流程。
      */
@@ -495,8 +495,8 @@ public class ThreadTest {
     /**
      * {@link Thread#interrupted()}
      * API描述: 检测当前线程是否被中断，如果是返回true，否则返回false。与isInterrupted不同的是，该方法如果发现当前线程被中断，则会清除
-     * 中断标志，并且该方法是static方法，可以通过Thread类直接调用。注意: 在interrupted（）内部是获取当前调用线程的中断标志而不是调用
-     * interrupted（）方法的实例对象的中断标志。
+     * 中断标志，并且该方法是static方法，可以通过Thread类直接调用。注意: 在interrupted()内部是获取当前调用线程的中断标志而不是调用
+     * interrupted()方法的实例对象的中断标志。
      */
     @Test
     public void interruptedTest() {

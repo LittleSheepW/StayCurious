@@ -16,7 +16,7 @@ public class ClassTest {
     /**
      * 使用给定的字符串名称返回与类或接口关联的Class对象。
      * 调用此方法等效于: Class.forName(className，true，currentLoader)，其中currentLoader表示当前类的定义类加载器。
-     * 例如，以下代码片段返回名为java.lang.Thread的类的运行时Class描述符: Class t = Class.forName（“java.lang.Thread”）
+     * 例如，以下代码片段返回名为java.lang.Thread的类的运行时Class描述符: Class t = Class.forName(“java.lang.Thread”)
      * 调用forName(“X”)会导致名为X的类被初始化。
      */
     @Test
@@ -29,7 +29,7 @@ public class ClassTest {
     }
 
     /**
-     * 以String形式返回此Class对象表示的实体名称（类，接口，数组类，原始类型或void）。
+     * 以String形式返回此Class对象表示的实体名称(类，接口，数组类，原始类型或void)。
      * 如果该类对象表示的引用类型不是数组类型，则返回该类的二进制名称，如Java™语言规范所指定。
      * 如果此类对象表示原始类型或void，则返回的名称是一个String，该字符串等于对应于原始类型或void的Java语言关键字。
      * 如果此类对象表示一类数组，则名称的内部形式由元素类型的名称组成，其后是一个或多个代表数组嵌套深度的'['字符。元素类型名称的编码如下:
@@ -109,7 +109,7 @@ public class ClassTest {
     }
 
     /**
-     * 返回Java语言规范定义的基础类的规范名称。如果基础类没有规范名称（即，如果它是本地或匿名类或其组件类型没有规范名称的数组），则返回null。
+     * 返回Java语言规范定义的基础类的规范名称。如果基础类没有规范名称(即，如果它是本地或匿名类或其组件类型没有规范名称的数组)，则返回null。
      * 注意: getName()和getCanonicalName()都可以产生完整类名，getCanonicalName()除内部类和数组外，对大部分类产生的结果与getName()相同。
      */
     @Test
@@ -180,12 +180,12 @@ public class ClassTest {
     }
 
     /**
-     * 返回表示该类表示的实体（类，接口，原始类型或void）的超类的Class。如果该Class表示Object类，接口，原始类型或void，则返回null。
+     * 返回表示该类表示的实体(类，接口，原始类型或void)的超类的Class。如果该Class表示Object类，接口，原始类型或void，则返回null。
      * 如果此对象表示数组类，则返回表示Object类的Class对象。
      */
     @Test
     public void getSuperclassTest() {
-        // 返回表示该类表示的实体（类，接口，原始类型或void）的超类的Class
+        // 返回表示该类表示的实体(类，接口，原始类型或void)的超类的Class
         System.out.println(ArrayList.class.getSuperclass());
 
         System.out.println();
@@ -221,7 +221,7 @@ public class ClassTest {
     /**
      * 创建此Class对象表示的类的新实例。就像通过带有空参数列表的new表达式实例化该类一样。如果尚未初始化该类，则将其初始化。
      * 请注意，此方法传播由nullary构造函数引发的所有异常，包括已检查的异常。使用此方法有效地绕过了编译时异常检查，否则该检查将由编译器执行。
-     * Constructor.newInstance方法通过将构造函数抛出的所有异常包装在（选中的）InvocationTargetException中来避免此问题。
+     * Constructor.newInstance方法通过将构造函数抛出的所有异常包装在(选中的)InvocationTargetException中来避免此问题。
      */
     @Test
     public void newInstanceTest() {

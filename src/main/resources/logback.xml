@@ -32,7 +32,7 @@
             <charset>UTF-8</charset>
         </encoder>
 
-        <!-- RollingFileAppender的file字节点可有可无，通过设置file，可以为活动文件和归档文件指定不同位置，当前日志总是记录到file指定的文件（活动文件），
+        <!-- RollingFileAppender的file字节点可有可无，通过设置file，可以为活动文件和归档文件指定不同位置，当前日志总是记录到file指定的文件(活动文件)，
         活动文件的名字不会改变；如果没设置file，活动文件的名字会根据fileNamePattern的值，每隔一段时间改变一次。“/”或者“\”会被当做目录分隔符。 -->
         <file>${LOG_BASE_DIR}/stay-curious.log</file>
 
