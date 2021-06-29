@@ -16,8 +16,10 @@ public class ThreadLocalTest {
      * 存放在ThreadLocal实例里面，而是存放在调用线程的threadLocals变量里面。也就是说，ThreadLocal类型的本地变量存放在具体的线程内存空间中。
      * ThreadLocal就是一个工具壳，它通过set方法把value值放入调用线程的threadLocals里面并存放起来，当调用线程调用它的get方法时，再从当前线程
      * 的threadLocals变量里面将其拿出来使用。如果调用线程一直不终止，那么这个本地变量会一直存放在调用线程的threadLocals变量里面，所以当不需要
-     * 使用本地变量时可以通过调用ThreadLocal变量的remove方法，从当前线程的threadLocals里面删除该本地变量。另外，Thread里面的threadLocals
-     * 为何被设计为map结构？很明显是因为每个线程可以关联多个ThreadLocal变量。
+     * 使用本地变量时可以通过调用ThreadLocal变量的remove方法，从当前线程的threadLocals里面删除该本地变量。
+     * <p>
+     * Thread里面的threadLocals为何被设计为map结构？
+     * 很明显是因为每个线程可以关联多个ThreadLocal变量。
      */
 
     static ThreadLocal<String> localVariable = new ThreadLocal<>();

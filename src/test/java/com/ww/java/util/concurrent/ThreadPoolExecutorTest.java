@@ -41,14 +41,17 @@ public class ThreadPoolExecutorTest {
      *    TERMINATED：终止状态。terminated方法调用完成以后的状态。
      * - mainLock是独占锁，用来控制新增Worker线程操作的原子性。
      * - termination是mainLock锁对应的条件队列，在线程调用awaitTermination时用来存放阻塞的线程。
-     * - corePoolSize：线程池核心线程个数。
-     * - workQueue：用于保存等待执行的任务的阻塞队列，比如基于数组的有界ArrayBlockingQueue、基于链表的无界LinkedBlockingQueue、最多只
-     * 有一个元素的同步队列SynchronousQueue及优先级队列PriorityBlockingQueue等。
-     * - maximumPoolSize：线程池最大线程数量。
+     * - corePoolSize：线程池核心线程个数，即使空闲也会在线程池中保活，除非设置了allowCoreThreadTimeOut；
+     * - maximumPoolSize：表示线程池可以同时执行的最大线程数量。
+     * - workQueue：用于保存等待执行的任务的阻塞队列(仅保存通过execute方法提交的Runnable任务)，比如基于数组的有界ArrayBlockingQueue、
+     * 基于链表的无界LinkedBlockingQueue、最多只有一个元素的同步队列SynchronousQueue及优先级队列PriorityBlockingQueue等。
+     * - keepAliveTime：存活时间。如果当前线程池中的线程数量比corePoolSize多，并且是闲置状态，则这些闲置的线程能存活的最大时间。
      * - ThreadFactory：创建线程的工厂。
-     * - defaultHandler：饱和策略，当队列满并且线程个数达到maximunPoolSize后采取的策略，比如AbortPolicy（抛出异常）、CallerRunsPolicy（使用
-     * 调用者所在线程来运行任务）、DiscardOldestPolicy（调用poll丢弃一个任务，执行当前任务）及DiscardPolicy（默默丢弃，不抛出异常）。
-     * - keepAliveTime：存活时间。如果当前线程池中的线程数量比核心线程数量多，并且是闲置状态，则这些闲置的线程能存活的最大时间。
+     * - handler：饱和策略，当队列满并且线程个数达到maximumPoolSize后采取的策略。
+     *   - AbortPolicy（抛出异常）
+     *   - CallerRunsPolicy（使用调用者所在线程来运行任务）
+     *   - DiscardOldestPolicy（调用poll丢弃一个任务，执行当前任务）
+     *   - DiscardPolicy（默默丢弃，不抛出异常）。
      *
      * Worker继承AQS和Runnable接口，是具体承载任务的对象。Worker继承了AQS，自己实现了简单不可重入独占锁，其中state=0表示锁未被获取状态，
      * state=1表示锁已经被获取的状态，state=-1是创建Worker时默认的状态，创建时状态设置为-1是为了避免该线程在运行runWorker（）方法前被中断。
