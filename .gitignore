@@ -33,3 +33,6 @@ HELP.md
 /data/
 /tomcat/
 /logs/
+
+### class file ###
+*.class
