@@ -14,6 +14,12 @@ public class DynamicArray {
     // 数组中的元素个数
     private int count;
 
+    /**
+     * 查找指定索引对应的元素
+     *
+     * @param index
+     * @return
+     */
     public int find(int index) {
         if (index < 0 || index >= count) {
             System.out.println("下标" + index + "不合法");
@@ -23,6 +29,13 @@ public class DynamicArray {
         return data[index];
     }
 
+    /**
+     * 在指定索引处插入元素
+     *
+     * @param index
+     * @param value
+     * @return
+     */
     public boolean insert(int index, int value) {
         if (index < 0 || index > count) {
             System.out.println("下标" + index + "不合法，插入元素" + value + "失败");
@@ -44,6 +57,12 @@ public class DynamicArray {
         return true;
     }
 
+    /**
+     * 删除指定索引处的元素
+     *
+     * @param index
+     * @return
+     */
     public boolean delete(int index) {
         if (index < 0 || index >= count) {
             System.out.println("下标" + index + "不合法，删除元素失败");
@@ -68,6 +87,13 @@ public class DynamicArray {
         return true;
     }
 
+    /**
+     * 修改指定索引处的元素
+     *
+     * @param index
+     * @param value
+     * @return
+     */
     public boolean update(int index, int value) {
         if (index < 0 || index > count) {
             System.out.println("下标" + index + "不合法，无法修改");
@@ -95,6 +121,9 @@ public class DynamicArray {
         return true;
     }
 
+    /**
+     * 打印数组
+     */
     public void printAll() {
         if (count == 0) {
             System.out.println("数组为空");
@@ -108,6 +137,11 @@ public class DynamicArray {
         System.out.println();
     }
 
+    /**
+     * 数组扩容
+     *
+     * @param length
+     */
     private void resize(int length) {
         int[] newArray = new int[length];
         for (int i = 0; i < count; i++) {
