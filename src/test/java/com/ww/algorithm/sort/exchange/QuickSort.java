@@ -3,15 +3,19 @@ package com.ww.algorithm.sort.exchange;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 
 /**
  * 快速排序：快速排序是从冒泡排序演变而来的算法，但是比冒泡排序要高效的多，所以叫快速排序。快速排序之所以快速，是因为它用了分治法。同冒泡排序一样，
  * 快速排序也属于交换排序，通过元素之间的比较和交换位置来达到排序的目的。不同的是，冒泡排序在每一轮只把一个元素冒泡到数列的一端，而快速排序在每一
  * 轮挑选一个基准元素，并让其他比它大的元素移动到数列一边，比它小的元素移动到数列的另一边，从而把数列拆解成了两个部分。
- *
  * <p>
  * 快速排序的基本思想是：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，然后再按此方法对这两
  * 部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。
+ * <p>
+ * 快速排序的平均时间复杂度是O(nlogn)，最坏时间复杂度为O(n^2)。
  *
  * @author: Sun
  * @create: 2021-07-08 17:57
@@ -43,11 +47,11 @@ public class QuickSort {
     }
 
     /**
-     * 实现元素的移动，让数列中的元素依据自身大小，分别移动到基准元素的左右两边。
+     * 分治(挖坑法)
      *
-     * @param arr
-     * @param startIndex
-     * @param endIndex
+     * @param arr        待交换的数组
+     * @param startIndex 起始下标
+     * @param endIndex   结束下标
      * @return
      */
     private static int diggingMethodPartition(int[] arr, int startIndex, int endIndex) {
@@ -64,7 +68,6 @@ public class QuickSort {
             // right指针从右向左进行比较
             while (right > left) {
                 if (arr[right] < pivot) {
-                    // TODO: arr[left]可以换成arr[index]
                     arr[left] = arr[right];
                     index = right;
                     left++;
@@ -76,7 +79,6 @@ public class QuickSort {
             // left指针从左向右进行比较
             while (right > left) {
                 if (arr[left] > pivot) {
-                    // TODO: arr[right]可以换成arr[index]
                     arr[right] = arr[left];
                     index = left;
                     right--;
@@ -93,45 +95,116 @@ public class QuickSort {
 
     @Test
     public void diggingMethodQuickSortTest() {
-        // int[] arr = {2, 1, 3};
         int[] arr = {4, 7, 6, 5, 3, 2, 8, 1};
 
-        System.out.println("快速排序前：" + Arrays.toString(arr));
+        System.out.println("挖坑法快速排序前：" + Arrays.toString(arr));
         diggingMethodQuickSort(arr, 0, arr.length - 1);
-        System.out.println("快速排序后：" + Arrays.toString(arr));
+        System.out.println("挖坑法快速排序后：" + Arrays.toString(arr));
     }
 
     // ------------------------------------- 挖坑法 END ------------------------------------- //
 
 
-    // ------------------------------------- 指针交换法 BEGIN ------------------------------------- //
+    // ------------------------------------- 单边循环法 BEGIN ------------------------------------- //
 
     /**
-     * 指针交换法：
-     * 我们首先选定基准元素pivot，并且设置两个指针left和right，指向数列的最左和最右两个元素。接下来是第一次循环，从right指针开始，把指针所
-     * 指向的元素和基准元素做比较。如果大于等于pivot，则指针向左移动；如果小于pivot，则right指针停止移动，切换到left指针。轮到left指针行动，
-     * 把指针所指向的元素和基准元素做比较。如果小于等于pivot，则指针向右移动；如果大于pivot，则left指针停止移动。这时候，我们让left和right
-     * 指向的元素进行交换。按照上面的思路继续排序，当left和right指针重合之时，我们让pivot元素和left与right重合点的元素进行交换。此时数列左
-     * 边的元素都小于pivot，数列右边的元素都大于pivot，结束本轮交换。
+     * 单边循环法：我们首先选定基准元素pivot，同时设置一个mark指针指向数列起始位置，这个mark指针代表小于基准元素的区域边界。接下来，从基准元
+     * 素的下一个位置开始遍历数组。如果遍历到的元素大于基准元素，就继续往后遍历。如果遍历到的元素小于基准元素，则需要做两件事：第一，将mark指针
+     * 右移一位，因为小于pivot的区域边界增大了1；第二，让最新遍历到的元素和mark指针所在位置的元素交换位置，因为最新遍历的元素归属于小于pivot
+     * 的区域。按照上面的思路继续遍历直到数组最后，最终将mark指针的元素和基准元素进行交换。此时数列左边的元素都小于pivot，数列右边的元素都大于
+     * pivot，结束本轮交换。
      */
-    public void pointerSwapQuickSort(int[] arr, int startIndex, int endIndex) {
+    public void unilateralLoopQuickSort(int[] arr, int startIndex, int endIndex) {
         // 递归结束条件：startIndex大等于endIndex的时候
         if (startIndex >= endIndex) {
             return;
         }
 
         // 得到基准元素位置
-        int pivotIndex = pointerSwapQuickSortPartition(arr, startIndex, endIndex);
+        int pivotIndex = unilateralLoopQuickSortPartition(arr, startIndex, endIndex);
         // 用分治法递归数列的两部分
-        pointerSwapQuickSort(arr, startIndex, pivotIndex - 1);
-        pointerSwapQuickSort(arr, pivotIndex + 1, endIndex);
+        unilateralLoopQuickSort(arr, startIndex, pivotIndex - 1);
+        unilateralLoopQuickSort(arr, pivotIndex + 1, endIndex);
     }
 
-    public int pointerSwapQuickSortPartition(int[] arr, int startIndex, int endIndex) {
+    /**
+     * 分治(单边循环法)
+     *
+     * @param arr        待交换的数组
+     * @param startIndex 起始下标
+     * @param endIndex   结束下标
+     * @return
+     */
+    public int unilateralLoopQuickSortPartition(int[] arr, int startIndex, int endIndex) {
+        int mark = startIndex;
+
+        // 取第一个位置的元素作为基准元素(也可与选择随机位置的元素作为基准元素)
+        int pivot = arr[startIndex];
+
+        for (int i = startIndex + 1; i <= endIndex; i++) {
+            if (arr[i] < pivot) {
+                mark++;
+
+                int temp = arr[mark];
+                arr[mark] = arr[i];
+                arr[i] = temp;
+            }
+        }
+
+        arr[startIndex] = arr[mark];
+        arr[mark] = pivot;
+
+        return mark;
+    }
+
+    @Test
+    public void unilateralLoopQuickSortTest() {
+        int[] arr = {3, 2, 1, 4, 5};
+
+        System.out.println("单边循环法快速排序前：" + Arrays.toString(arr));
+        unilateralLoopQuickSort(arr, 0, arr.length - 1);
+        System.out.println("单边循环法快速排序后：" + Arrays.toString(arr));
+    }
+
+    // ------------------------------------- 单边循环法 END ------------------------------------- //
+
+
+    // ------------------------------------- 双边循环法 BEGIN ------------------------------------- //
+
+    /**
+     * 双边循环法：
+     * 我们首先选定基准元素pivot，并且设置两个指针left和right，指向数列的最左和最右两个元素。接下来是第一次循环，从right指针开始，把指针所
+     * 指向的元素和基准元素做比较。如果大于等于pivot，则指针向左移动；如果小于pivot，则right指针停止移动，切换到left指针。轮到left指针行动，
+     * 把指针所指向的元素和基准元素做比较。如果小于等于pivot，则指针向右移动；如果大于pivot，则left指针停止移动。这时候，我们让left和right
+     * 指向的元素进行交换。按照上面的思路继续排序，当left和right指针重合之时，我们让pivot元素和left与right重合点的元素进行交换。此时数列左
+     * 边的元素都小于pivot，数列右边的元素都大于pivot，结束本轮交换。
+     */
+    public void bilateralRoundRobinQuickSort(int[] arr, int startIndex, int endIndex) {
+        // 递归结束条件：startIndex大等于endIndex的时候
+        if (startIndex >= endIndex) {
+            return;
+        }
+
+        // 得到基准元素位置
+        int pivotIndex = bilateralRoundRobinQuickSortPartition(arr, startIndex, endIndex);
+        // 用分治法递归数列的两部分
+        bilateralRoundRobinQuickSort(arr, startIndex, pivotIndex - 1);
+        bilateralRoundRobinQuickSort(arr, pivotIndex + 1, endIndex);
+    }
+
+    /**
+     * 分治(双边循环法)
+     *
+     * @param arr        待交换的数组
+     * @param startIndex 起始下标
+     * @param endIndex   结束下标
+     * @return
+     */
+    public int bilateralRoundRobinQuickSortPartition(int[] arr, int startIndex, int endIndex) {
         int left = startIndex;
         int right = endIndex;
 
-        // 取第一个位置的元素作为基准元素
+        // 取第一个位置的元素作为基准元素(也可与选择随机位置的元素作为基准元素)
         int pivot = arr[startIndex];
 
         while (left != right) {
@@ -147,27 +220,73 @@ public class QuickSort {
             // 交换left和right指向的元素
             if (left < right) {
                 int temp = arr[left];
-                arr[left] = right;
+                arr[left] = arr[right];
                 arr[right] = temp;
             }
         }
 
-        int temp = arr[left];
-        arr[left] = arr[startIndex];
-        arr[startIndex] = temp;
+        arr[startIndex] = arr[left];
+        arr[left] = pivot;
 
         return left;
     }
 
     @Test
-    public void pointerSwapQuickSortTest() {
-        int[] arr = {2, 1};
-        // int[] arr = {4, 7, 6, 5, 3, 2, 8, 1};
+    public void bilateralRoundRobinQuickSortTest() {
+        int[] arr = {4, 7, 6, 5, 3, 2, 8, 1};
 
-        System.out.println("快速排序前：" + Arrays.toString(arr));
-        pointerSwapQuickSort(arr, 0, arr.length - 1);
-        System.out.println("快速排序后：" + Arrays.toString(arr));
+        System.out.println("双边循环法快速排序前：" + Arrays.toString(arr));
+        bilateralRoundRobinQuickSort(arr, 0, arr.length - 1);
+        System.out.println("双边循环法快速排序后：" + Arrays.toString(arr));
     }
 
-    // ------------------------------------- 指针交换法 END ------------------------------------- //
+    // ------------------------------------- 双边循环法 END ------------------------------------- //
+
+
+    // ------------------------------------- 非递归方式(使用栈) BEGIN------------------------------------- //
+    public void stackQuickSort(int[] arr, int startIndex, int endIndex) {
+        // 用一个集合栈来代替递归的函数栈
+        Stack<Map<String, Integer>> stack = new Stack<>();
+
+        Map<String, Integer> paramMap = new HashMap<>();
+        paramMap.put("startIndex", startIndex);
+        paramMap.put("endIndex", endIndex);
+        stack.push(paramMap);
+
+        // 循环结束条件：栈为空时结束
+        while (!stack.isEmpty()) {
+            // 栈顶元素出栈，得到起止下标
+            Map<String, Integer> tempParamMap = stack.pop();
+
+            // 得到基准元素位置
+            Integer tempStartIndex = tempParamMap.get("startIndex");
+            Integer tempEndIndex = tempParamMap.get("endIndex");
+            int pivotIndex = unilateralLoopQuickSortPartition(arr, tempStartIndex, tempEndIndex);
+
+            // 根据基准元素分成两部分, 把每一部分的起止下标入栈
+            if (tempStartIndex < pivotIndex - 1) {
+                paramMap = new HashMap<>();
+                paramMap.put("startIndex", tempStartIndex);
+                paramMap.put("endIndex", pivotIndex - 1);
+                stack.push(paramMap);
+            }
+            if (pivotIndex + 1 < tempEndIndex) {
+                paramMap = new HashMap<>();
+                paramMap.put("startIndex", pivotIndex + 1);
+                paramMap.put("endIndex", tempEndIndex);
+                stack.push(paramMap);
+            }
+        }
+    }
+
+    @Test
+    public void stackQuickSortTest() {
+        int[] arr = {4, 7, 6, 5, 3, 2, 8, 1};
+
+        System.out.println("非递归方式快速排序前：" + Arrays.toString(arr));
+        stackQuickSort(arr, 0, arr.length - 1);
+        System.out.println("非递归方式快速排序后：" + Arrays.toString(arr));
+    }
+
+    // ------------------------------------- 非递归方式(使用栈) END------------------------------------- //
 }
