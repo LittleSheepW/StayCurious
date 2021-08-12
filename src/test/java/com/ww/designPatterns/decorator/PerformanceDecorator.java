@@ -22,7 +22,6 @@ public class PerformanceDecorator implements Command {
     public void execute() {
         long beginTime = System.currentTimeMillis();
         this.cmd.execute();
-        ;
         long endTime = System.currentTimeMillis();
 
         log.info("[execute] [消耗的时间:{}]", endTime - beginTime);
